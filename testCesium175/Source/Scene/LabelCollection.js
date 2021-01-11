@@ -157,11 +157,28 @@ function rebindAllGlyphs(labelCollection, label) {
     }
   } else {
     if (!defined(backgroundBillboard)) {
-      backgroundBillboard = backgroundBillboardCollection.add({
-        collection: labelCollection,
-        image: whitePixelCanvasId,
-        imageSubRegion: whitePixelBoundingRegion,
-      });
+      // addon
+      if(defined(label._backgroundImage)){
+        backgroundBillboard = backgroundBillboardCollection.add({
+          collection: labelCollection,
+          image: label._backgroundImage,
+          position: label._position,
+        })
+      } else {
+        backgroundBillboard = backgroundBillboardCollection.add({
+          collection: labelCollection,
+          image: whitePixelCanvasId,
+          imageSubRegion: whitePixelBoundingRegion,
+        })
+      }
+      // backgroundBillboard = backgroundBillboardCollection.add({
+      //   // addon
+      //   collection: labelCollection,
+      //   image: label._backgroundImage || whitePixelCanvasId,
+      //   position: label._position,
+      //   // addon
+      // });
+      // addon
       label._backgroundBillboard = backgroundBillboard;
     }
 

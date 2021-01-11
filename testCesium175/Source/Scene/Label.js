@@ -214,6 +214,9 @@ function Label(options, labelCollection) {
   this._labelCollection = labelCollection;
   this._glyphs = [];
   this._backgroundBillboard = undefined;
+  // addon
+  this._backgroundImage = undefined;
+  // addon
   this._batchIndex = undefined; // Used only by Vector3DTilePoints and BillboardCollection
 
   this._rebindAllGlyphs = true;
@@ -372,6 +375,26 @@ Object.defineProperties(Label.prototype, {
       }
     },
   },
+
+  // addon
+  /**
+   * Gets or sets the background picture of this label.
+   * @memberof Label.prototype
+   * @type {String}
+   */
+  backgroundImage: {
+    get: function(){
+      return this._backgroundImage;
+    },
+    set: function(value){
+      if(this._backgroundImage !== value){
+        this._backgroundImage = value;
+        rebindAllGlyphs(this);
+      }
+    }
+  },
+
+  // addon
 
   /**
    * Gets or sets the font used to draw this label. Fonts are specified using the same syntax as the CSS 'font' property.

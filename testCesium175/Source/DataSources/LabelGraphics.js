@@ -66,6 +66,10 @@ function LabelGraphics(options) {
   this._backgroundColorSubscription = undefined;
   this._backgroundPadding = undefined;
   this._backgroundPaddingSubscription = undefined;
+  // addon
+  this._backgroundImage = undefined;
+  this._backgroundImageSubscription = undefined;
+  // addon
   this._pixelOffset = undefined;
   this._pixelOffsetSubscription = undefined;
   this._eyeOffset = undefined;
@@ -180,6 +184,10 @@ Object.defineProperties(LabelGraphics.prototype, {
    * @default new Cartesian2(7, 5)
    */
   backgroundPadding: createPropertyDescriptor("backgroundPadding"),
+
+  // addon
+  backgroundImage: createPropertyDescriptor("backgroundImage"),
+  // addon
 
   /**
    * Gets or sets the {@link Cartesian2} Property specifying the label's pixel offset in screen space
@@ -342,6 +350,9 @@ LabelGraphics.prototype.clone = function (result) {
   result.scale = this.scale;
   result.showBackground = this.showBackground;
   result.backgroundColor = this.backgroundColor;
+  // addon
+  result.backgroundImage = this.backgroundImage;
+  // addon
   result.backgroundPadding = this.backgroundPadding;
   result.pixelOffset = this.pixelOffset;
   result.eyeOffset = this.eyeOffset;
@@ -389,6 +400,9 @@ LabelGraphics.prototype.merge = function (source) {
     this.backgroundPadding,
     source.backgroundPadding
   );
+  // addon
+  this.backgroundImage = defaultValue(this.backgroundImage, source.backgroundImage);
+  // addon
   this.pixelOffset = defaultValue(this.pixelOffset, source.pixelOffset);
   this.eyeOffset = defaultValue(this.eyeOffset, source.eyeOffset);
   this.horizontalOrigin = defaultValue(

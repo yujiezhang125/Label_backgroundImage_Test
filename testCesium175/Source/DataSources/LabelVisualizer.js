@@ -7,6 +7,7 @@ import defined from "../Core/defined.js";
 import destroyObject from "../Core/destroyObject.js";
 import DeveloperError from "../Core/DeveloperError.js";
 import DistanceDisplayCondition from "../Core/DistanceDisplayCondition.js";
+import CesiumMath from "../Core/Math.js";
 import NearFarScalar from "../Core/NearFarScalar.js";
 import HeightReference from "../Scene/HeightReference.js";
 import HorizontalOrigin from "../Scene/HorizontalOrigin.js";
@@ -101,6 +102,9 @@ LabelVisualizer.prototype.update = function (time) {
     var entity = item.entity;
     var labelGraphics = entity._label;
     var text;
+    // addon
+    var backgroundImage;
+    // addon
     var label = item.label;
     var show =
       entity.isShowing &&
@@ -114,6 +118,9 @@ LabelVisualizer.prototype.update = function (time) {
         positionScratch
       );
       text = Property.getValueOrUndefined(labelGraphics._text, time);
+      // addon
+      backgroundImage = Property.getValueOrUndefined(labelGraphics._backgroundImage, time);
+      // addon
       show = defined(position) && defined(text);
     }
 
@@ -151,6 +158,13 @@ LabelVisualizer.prototype.update = function (time) {
     label.show = true;
     label.position = position;
     label.text = text;
+    // addon
+    // label.backgroundImage = backgroundImage;
+    label.backgroundImage = Property.getValueOrUndefined(
+      labelGraphics._backgroundImage,
+      time
+    )
+    // addon
     label.scale = Property.getValueOrDefault(
       labelGraphics._scale,
       time,
@@ -188,12 +202,15 @@ LabelVisualizer.prototype.update = function (time) {
       time,
       defaultShowBackground
     );
-    label.backgroundColor = Property.getValueOrDefault(
-      labelGraphics._backgroundColor,
-      time,
-      defaultBackgroundColor,
-      backgroundColorScratch
-    );
+    // label.backgroundColor = Property.getValueOrDefault(
+    //   labelGraphics._backgroundColor,
+    //   time,
+    //   defaultBackgroundColor,
+    //   backgroundColorScratch
+    // );
+    // addon
+    label.backgroundColor = defined(backgroundImage)? Cesium.Color.fromAlpha(Cesium.Color.WHITE, 1): Property.getValueOrDefault(labelGraphics._backgroundColor, time, defaultBackgroundColor, backgroundColorScratch);
+    // addon
     label.backgroundPadding = Property.getValueOrDefault(
       labelGraphics._backgroundPadding,
       time,
