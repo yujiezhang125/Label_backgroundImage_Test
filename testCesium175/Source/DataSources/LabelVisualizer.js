@@ -7,7 +7,6 @@ import defined from "../Core/defined.js";
 import destroyObject from "../Core/destroyObject.js";
 import DeveloperError from "../Core/DeveloperError.js";
 import DistanceDisplayCondition from "../Core/DistanceDisplayCondition.js";
-import CesiumMath from "../Core/Math.js";
 import NearFarScalar from "../Core/NearFarScalar.js";
 import HeightReference from "../Scene/HeightReference.js";
 import HorizontalOrigin from "../Scene/HorizontalOrigin.js";
@@ -209,7 +208,13 @@ LabelVisualizer.prototype.update = function (time) {
     //   backgroundColorScratch
     // );
     // addon
-    label.backgroundColor = defined(backgroundImage)? Cesium.Color.fromAlpha(Cesium.Color.WHITE, 1): Property.getValueOrDefault(labelGraphics._backgroundColor, time, defaultBackgroundColor, backgroundColorScratch);
+    label.backgroundColor = defined(labelGraphics._backgroundImage) ?
+      Cesium.Color.fromAlpha(Cesium.Color.WHITE, 1) :
+      Property.getValueOrDefault(
+        labelGraphics._backgroundColor,
+        time,
+        defaultBackgroundColor,
+        backgroundColorScratch);
     // addon
     label.backgroundPadding = Property.getValueOrDefault(
       labelGraphics._backgroundPadding,
